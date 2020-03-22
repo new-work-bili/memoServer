@@ -15,7 +15,7 @@ var app = express();
 
 
 
-
+//test
 
 //设置跨域访问
 app.use(cors());
@@ -36,7 +36,7 @@ app.use('/login/', loginRouter);
 
 //在这个前面写登陆，注销，注册
 app.use(function(req, res, next) {
-	if(req.headers.authorization){	//如果请求头有token，那么往下走，用户在坐在先操作，需要进行实时保存
+	if(req.headers.authorization){	//如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存
 		next()
 	}else{							//如果没有token，直接返回不往下走，这是用户在做离线操作
 		res.json({
