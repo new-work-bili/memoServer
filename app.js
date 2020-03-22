@@ -36,6 +36,7 @@ app.use('/login/', loginRouter);
 
 //在这个前面写登陆，注销，注册
 app.use(function(req, res, next) {
+	console.log(111)
 	if(req.headers.authorization){	//如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存
 		next()
 	}else{							//如果没有token，直接返回不往下走，这是用户在做离线操作
@@ -57,6 +58,7 @@ app.use(function(req, res, next) {
 
 //统一对错误进行处理
 app.use(function(err, req, res, next) {
+	console.log(222)
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 	
@@ -69,7 +71,6 @@ app.use(function(err, req, res, next) {
 			error:err.status,
 			errorMsg:err.message
 		})
-		
 		return
 	}
 	// render the error page
