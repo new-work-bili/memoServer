@@ -27,7 +27,6 @@ function init(data) {
 //增加item
 function add(data) {
 	const sql = `insert into memoitem(user,type,title,label,time,content) values('${data.userName}','${data.type}','${data.title}','${data.label}','${data.time}','${data.content}');`
-	
 	return exec(sql)
 }
 

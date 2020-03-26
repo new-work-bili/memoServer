@@ -43,17 +43,17 @@ router.post('/add/', function(req, res, next) {
 				console.log(bdres)
 				res.json({
 					code: 3,
-					msg:'保存成功'
+					msg:'保存成功',
 				})
 			}).catch((err)=>{
 				console.log('add>err:',err)
 			})
-		}else{
+		}else{	//编辑
 			return edit(itemData).then((bdres)=>{
 				console.log(bdres)
 				res.json({
 					code: 3,
-					msg:'更新成功'
+					msg:'更新成功',
 				})
 			}).catch((err)=>{
 				console.log('edit>err:',err)
@@ -88,6 +88,11 @@ router.post('/delete/', function(req, res, next) {
 		})
 	}
 	
+});
+
+
+router.get('/memo/qqlogin/', function(req, res, next) {
+	console.log(req.body)
 });
 
 
