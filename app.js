@@ -9,6 +9,7 @@ const jwtAuth = require('./routes/jwt.js')		//token验证
 const {token_ERR} = require('./config.js');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
+var QQ = require('./routes/QQ');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public/dist')));
 //验证token
 app.use(jwtAuth)	
 app.use('/login/', loginRouter);
+app.use('/',QQ)
 
 //在这个前面写登陆，注销，注册
 app.use(function(req, res, next) {

@@ -90,9 +90,6 @@ router.post('/delete/', function(req, res, next) {
 });
 
 
-router.get('/memo/qqlogin/', function(req, res, next) {
-	console.log(req.body)
-});
 
 
 
