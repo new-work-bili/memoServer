@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const request = require("request");		
-const urlencode = require('urlencode');
+// const urlencode = require('urlencode');
 const {
 	login,
 	init,
@@ -33,7 +33,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 			jsonStr = JSON.parse(jsonStr);
 			var qqOpenid = jsonStr['openid'];
 			var qqClient_id = jsonStr['client_id'];
-			var getUserData = 'https://graph.qq.com/user/get_user_info?access_token='+ urlencode(access_token) +'&oauth_consumer_key='+ urlencode(appId) + '&openid=' + urlencode(qqOpenid)
+			var getUserData = `https://graph.qq.com/user/get_user_info?access_token=${access_token}&oauth_consumer_key=${appId}&openid=${qqOpenid}`
 			 request.get({url:getUserData},  (err, httpResponse, body) =>{
 			                body = JSON.parse(body);
 			                console.log("\
