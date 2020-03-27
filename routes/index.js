@@ -8,7 +8,6 @@ router.post('/init/', function(req, res, next) {
 	var userName = req.body.userName
 	if(userName){
 		return init(userName).then((bdres)=>{
-			// console.log(bdres)
 			res.json({
 				code: 3,
 				userName:userName,
