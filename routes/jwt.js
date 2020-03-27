@@ -4,7 +4,7 @@ const { PRIVATE_KEY } = require('../config.js');
 
 const jwtAuth = jwt({
   secret: PRIVATE_KEY,
-  credentialsRequired: false // 设置为false就不进行校验了，游客也可以访问
+  credentialsRequired: true // 设置为false就不进行校验了，游客也可以访问
 }).unless({
   path: [
     '/',
