@@ -42,6 +42,12 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 			                    <p>性别："+ body.gender+"</p>\
 			                    <p>地区："+body.province +","+ body.city+"</p>\
 			                ");
+							res.send("\
+			                    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\
+			                    <p>![]("+body.figureurl_qq_1+")</p>\
+			                    <p>性别："+ body.gender+"</p>\
+			                    <p>地区："+body.province +","+ body.city+"</p>\
+			                ")
 			            })
 		})
 	})
