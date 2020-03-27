@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
 //验证token
-// app.use(jwtAuth)	
+app.use(jwtAuth)	
 app.use('/login/', loginRouter);
 app.use('/',QQ)
 
@@ -78,5 +78,4 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-app.use(jwtAuth)	
 module.exports = app;

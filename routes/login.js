@@ -16,6 +16,7 @@ router.post('/', function(req, res, next) {
 	// jwt.verify(str, PRIVATE_KEY, function(err, resUser) {
 	// 	console.log('resUser', resUser); 
 	// })
+	console.log('login',req.url)
 	//登陆操作
 	return login(req.body).then(data => {
 		if (!data || data.length == 0) {
