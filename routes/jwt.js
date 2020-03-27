@@ -9,7 +9,8 @@ const jwtAuth = jwt({
   path: [
     '/',
     '/login/',
-	'/login/registe/'
+	'/login/registe/',
+	'/memo/qqlogin/'
   ], // 设置 jwt 认证白名单
 });
 
