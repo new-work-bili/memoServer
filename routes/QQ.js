@@ -13,7 +13,7 @@ const appId = '101851279'
 const appKey = '0835ace1f5216c95aa1fb5930168f50a'
 const redirect_uri = 'http://lppwork.cn/memo/qqlogin' //回调域
 
-router.get('/memo/qqlogin/', function(req, res, next) {
+router.get('/memo/qqlogin', function(req, res, next) {
 	console.log('req.query:', req.query)
 	console.log('QQreq.url', req.url)
 	var code = req.query.code	//获取code
