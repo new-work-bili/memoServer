@@ -49,6 +49,12 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 							console.log('befor')
 							res.location('lppwork.cn')
 							console.log('after')
+								res.send("\
+								    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\
+								    <p>![QQ头像]("+body.figureurl_qq_1+")</p>\
+								    <p>性别："+ body.gender+"</p>\
+								    <p>地区："+body.province +","+ body.city+"</p>\
+								")
 							//数据库
 							// return login(userData).then(data => {
 							// 	if (!data || data.length == 0) {
