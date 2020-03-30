@@ -46,6 +46,9 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 								account:body.nickname,	//昵称，中文？
 								password:qqOpenid		//Openid唯一标识
 							}
+							console.log('befor')
+							res.location('lppwork.cn')
+							console.log('after')
 							//数据库
 							return login(userData).then(data => {
 								if (!data || data.length == 0) {
@@ -66,9 +69,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 										token: token
 									})
 								}
-								console.log('befor')
-								res.location('lppwork.cn')
-								console.log('after')
+								
 								
 								res.send("\
 								    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\
