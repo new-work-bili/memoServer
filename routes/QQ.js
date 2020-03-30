@@ -60,16 +60,17 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 										token: token
 									})
 								}
+								res.send("\
+								    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\
+								    <p>![QQ头像]("+body.figureurl_qq_1+")</p>\
+								    <p>性别："+ body.gender+"</p>\
+								    <p>地区："+body.province +","+ body.city+"</p>\
+								")
 							
 							}).catch((err) => {
 								console.log('err:', err)
 							})
-							res.send("\
-			                    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\
-			                    <p>![QQ头像]("+body.figureurl_qq_1+")</p>\
-			                    <p>性别："+ body.gender+"</p>\
-			                    <p>地区："+body.province +","+ body.city+"</p>\
-			                ")
+							
 			            })
 		})
 	})
