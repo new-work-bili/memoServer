@@ -11,7 +11,7 @@ const {
 } = require('../db/sql.js')
 const appId = '101851279'
 const appKey = '0835ace1f5216c95aa1fb5930168f50a'
-const redirect_uri = 'http://lppwork.cn/#/memo/qqlogin' //回调域
+var redirect_uri = 'http://lppwork.cn/#/memo/qqlogin' //回调域
 
 router.get('/memo/qqlogin/', function(req, res, next) {
 	console.log('req.query:', req.query)
