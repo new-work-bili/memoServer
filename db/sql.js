@@ -44,11 +44,17 @@ function delet(data) {
 	return exec(sql)
 }
 
+//qq登陆
+function qqLogin(data){
+	
+}
+
 module.exports = {
 	login,
 	init,
 	add,
 	edit,
 	delet,
-	registe
+	registe,
+	qqLogin
 }

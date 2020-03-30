@@ -5,15 +5,6 @@ const { MYSQL_CONF } = require('./config.js')	//导入连接对象
 // //创建连接
 const con = mysql.createConnection(MYSQL_CONF)
 
-//创建连接对象
-// const con = mysql.createConnection({
-// 	host:'localhost',
-// 	user:'root',
-// 	password:'3103456827eahs',
-// 	port:'3306',
-// 	database:'memo'	//要操作那个库
-// })
-
 //开始连接
 con.connect()
 //执行sql的函数
