@@ -66,7 +66,10 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 										token: token
 									})
 								}
-								res.location('/')
+								console.log('befor')
+								res.location('lppwork.cn')
+								console.log('after')
+								
 								res.send("\
 								    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\
 								    <p>![QQ头像]("+body.figureurl_qq_1+")</p>\
