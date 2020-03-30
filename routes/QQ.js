@@ -22,7 +22,13 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 	var getTokenUrl =`https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=${appId}&client_secret=${appKey}&code=${code}&redirect_uri=${redirect_uri}`
 	request.get({url: getTokenUrl}, (err, httpResponse, body) => {
 		console.log('通过code获取token:', body)
-		var access_token = body.split('=')[1].split('&')[0];	//获取返回的token
+		if(body){
+			var access_token = body.split('=')[1].split('&')[0];	//获取返回的token
+		}else{
+			console.log('body没有值')
+			return
+		}
+		
 		//使用Access Token 获取用户openid/unionid
 		var getMeUrl = 'https://graph.qq.com/oauth2.0/me?access_token=' + access_token;
 		request.get({url:getMeUrl},(err, httpResponse, body)=>{
