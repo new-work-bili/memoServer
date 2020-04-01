@@ -20,15 +20,6 @@ history({
   rewrites: [
     { from: /\/soccer/, to: '/soccer.html'}
   ]
-  or
-  rewrites: [
-    {
-      from: /^\/libs\/.*$/,
-      to: function(context) {
-        return '/bower_components' + context.parsedUrl.pathname;
-      }
-    }
-  ]
 })
 
 
