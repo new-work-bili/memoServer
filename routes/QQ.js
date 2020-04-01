@@ -91,6 +91,9 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 			            })
 		})
 	})
+	res.json({
+		code:"success!"
+	})
 });
 
 module.exports = router;

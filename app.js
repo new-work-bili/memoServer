@@ -47,7 +47,7 @@ app.use(function(req, res, next) {
 		next()
 	}else{							//如果没有token，直接返回不往下走，这是用户在做离线操作
 		res.json({
-			code:555
+			code:'离线操作'
 		})
 	}
 	
