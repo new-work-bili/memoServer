@@ -23,7 +23,7 @@ var app = express();
 app.use(cors());
 //应对vue的history
 app.use(history({
-   htmlAcceptHeaders: ['text/html', 'application/xhtml+xml']
+   htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
       rewrites: [
           {
               from: /^\/.*$/,
