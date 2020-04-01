@@ -23,7 +23,7 @@ var app = express();
 app.use(cors());
 //应对vue的history
 app.use(history({
-	index:path.join(__dirname, 'public/dist')
+	index:'/'
 }))
 
 app.set('views', path.join(__dirname, 'views'));
