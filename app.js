@@ -15,16 +15,28 @@ const history = require('connect-history-api-fallback')	//应对vue的history
 var app = express();
 
 
-
+history({
+  index: '/default.html',
+  rewrites: [
+    { from: /\/soccer/, to: '/soccer.html'}
+  ]
+  or
+  rewrites: [
+    {
+      from: /^\/libs\/.*$/,
+      to: function(context) {
+        return '/bower_components' + context.parsedUrl.pathname;
+      }
+    }
+  ]
+})
 
 
 
 //设置跨域访问
 app.use(cors());
 //应对vue的history
-app.use(history({
-	index:'/'
-}))
+app.use(history())
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
