@@ -23,8 +23,15 @@ var app = express();
 app.use(cors());
 //应对vue的history
 app.use(history({
-  verbose: true,
-  index: '/'
+   htmlAcceptHeaders: ['text/html', 'application/xhtml+xml']
+      rewrites: [
+          {
+              from: /^\/.*$/,
+              to: function (context) {
+                  return "/";
+              }
+          },
+      ]
 }))
 
 app.set('views', path.join(__dirname, 'views'));
