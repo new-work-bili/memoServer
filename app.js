@@ -24,7 +24,7 @@ app.use(cors());
 //应对vue的history
 app.use(history({
   verbose: true,
-  index: './public/dist/index.html'
+  index: '/'
 }))
 
 app.set('views', path.join(__dirname, 'views'));
