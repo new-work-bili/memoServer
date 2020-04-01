@@ -21,7 +21,8 @@ var app = express();
 
 //设置跨域访问
 app.use(cors());
-
+//应对vue的history
+app.use('/', history());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -32,8 +33,7 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public/dist')));
-//应对vue的history
-app.use('/', history());
+
 
 //验证token
 app.use(jwtAuth)	
