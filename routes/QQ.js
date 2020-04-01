@@ -47,7 +47,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 								password:qqOpenid		//Openid唯一标识
 							}
 							console.log('befor')
-							res.location('lppwork.cn')
+							// res.location('lppwork.cn')
 							console.log('after')
 								res.json("\
 								    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\

@@ -16,12 +16,14 @@ var app = express();
 
 
 
-app.use('/', history());
+
 
 
 //设置跨域访问
 app.use(cors());
-// view engine setup
+//应对vue的history
+app.use('/', history());
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger('dev'));
