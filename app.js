@@ -10,13 +10,14 @@ const {token_ERR} = require('./config.js');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var QQ = require('./routes/QQ');
+const history = require('connect-history-api-fallback')	//应对vue的history
 
 var app = express();
 
 
 
+app.use('/', history());
 
-//testdown linux
 
 //设置跨域访问
 app.use(cors());
