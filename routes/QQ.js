@@ -75,7 +75,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 
 });
 
-router.get('/qqData/',function(req,res,next)=>{
+router.get('/qqData/',function(req,res,next){
 	if(userData.get = true){
 		res.json({
 			userData:userData
