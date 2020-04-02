@@ -49,6 +49,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 			request.get({
 				url: getUserData
 			}, (err, httpResponse, body) => {
+				console.log('get用户数据')
 				body = JSON.parse(body);
 				var user = {
 					account: body.nickname, //昵称，中文？
@@ -77,6 +78,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 });
 
 router.get('/qqData/',function(req,res,next){
+	console.log('处理qqData接口')
 	if(userData.get = true){
 		res.json({
 			userData:userData
