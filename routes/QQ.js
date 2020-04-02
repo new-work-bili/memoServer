@@ -54,23 +54,24 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 					account: body.nickname, //昵称，中文？
 					password: qqOpenid //Openid唯一标识
 				}
+				userData.get = true
+				userData.name = body.nickname 
+				userData.qqOpenid = qqOpenid
 			})
 		})
 	})
-	userData.get = true
-	userData.name = body.nickname 
-	userData.qqOpenid = qqOpenid
+	
 	//正常请求
 	//注意QQ登陆的时候应该只查qqOpendid
-	console.log('监听到/QQ/')
-	res.json("\
-						    <h1>QQ昵称：" + body.nickname + "openid:" + qqOpenid +
-		"</h1>\
-						    <p>![QQ头像](" + body.figureurl_qq_1 + ")</p>\
-						    <p>性别：" + body.gender +
-		"</p>\
-						    <p>地区：" + body.province + "," + body.city + "</p>\
-						")
+	// console.log('监听到/QQ/')
+	// res.json("\
+	// 					    <h1>QQ昵称：" + body.nickname + "openid:" + qqOpenid +
+	// 	"</h1>\
+	// 					    <p>![QQ头像](" + body.figureurl_qq_1 + ")</p>\
+	// 					    <p>性别：" + body.gender +
+	// 	"</p>\
+	// 					    <p>地区：" + body.province + "," + body.city + "</p>\
+	// 					")
 		
 
 });
