@@ -11,7 +11,7 @@ const {
 } = require('../db/sql.js')
 const appId = '101851279'
 const appKey = '0835ace1f5216c95aa1fb5930168f50a'
-var redirect_uri = 'http://lppwork.cn/#/memo/qqlogin' //回调域
+var redirect_uri = 'http://lppwork.cn/memo/qqlogin' //回调域
 var userData = {	//返回用户数据
 	get:false,
 	name:'',
@@ -79,12 +79,12 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 
 });
 
-// router.get('/qqData/',function(req,res,next){
-// 	console.log('处理qqData接口')
-// 	if(userData.get = true){
-// 		res.json({
-// 			userData:userData
-// 		})
-// 	}
-// })
+router.get('/qqData/',function(req,res,next){
+	console.log('处理qqData接口')
+	if(userData.get = true){
+		res.json({
+			userData:userData
+		})
+	}
+})
 module.exports = router;
