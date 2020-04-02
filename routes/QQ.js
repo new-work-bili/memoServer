@@ -59,6 +59,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 				userData.get = true
 				userData.name = body.nickname 
 				userData.qqOpenid = qqOpenid
+				next()
 			})
 		})
 	})
