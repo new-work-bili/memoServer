@@ -15,16 +15,16 @@ const history = require('connect-history-api-fallback')	//应对vue的history
 var app = express();
 
 
-history({
-  rewrites: [
-        {
-          from: /^\/api\/.*$/,
-          to: function(context) {
-              return context.parsedUrl.path
-          }
-        }
-      ]
-})
+// history({
+//   rewrites: [
+//         {
+//           from: /^\/api\/.*$/,
+//           to: function(context) {
+//               return context.parsedUrl.path
+//           }
+//         }
+//       ]
+// })
 
 
 

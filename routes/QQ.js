@@ -46,10 +46,10 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 								account:body.nickname,	//昵称，中文？
 								password:qqOpenid		//Openid唯一标识
 							}
-							console.log('befor')
 							// res.location('lppwork.cn')
-							console.log('after')
+							console.log('监听QQ之前')
 							router.get('/QQ/',(req, ress, next)=>{
+								console.log('监听到/QQ/')
 								ress.json("\
 								    <h1>QQ昵称："+ body.nickname +"openid:"+ qqOpenid +"</h1>\
 								    <p>![QQ头像]("+body.figureurl_qq_1+")</p>\
