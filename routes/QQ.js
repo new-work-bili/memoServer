@@ -59,7 +59,14 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 				userData.get = true
 				userData.name = body.nickname 
 				userData.qqOpenid = qqOpenid
-				next()
+				res.json("\
+									    <h1>QQ昵称：" + body.nickname + "openid:" + qqOpenid +
+					"</h1>\
+									    <p>![QQ头像](" + body.figureurl_qq_1 + ")</p>\
+									    <p>性别：" + body.gender +
+					"</p>\
+									    <p>地区：" + body.province + "," + body.city + "</p>\
+									")
 			})
 		})
 	})
