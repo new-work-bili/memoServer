@@ -19,6 +19,7 @@ var userData = {	//返回用户数据
 }
 
 console.log('中间')
+userData.name = '神农'
 router.get('/memo/qqlogin/', function(req, res, next) {
 	console.log('req.query:', req.query)
 	console.log('QQreq.url', req.url)
@@ -57,7 +58,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 					account: body.nickname, //昵称，中文？
 					password: qqOpenid //Openid唯一标识
 				}
-				userData.get = true
+				// userData.get = true
 				userData.name = body.nickname 
 				userData.qqOpenid = qqOpenid
 			})
