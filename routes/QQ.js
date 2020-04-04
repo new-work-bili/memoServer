@@ -18,7 +18,6 @@ var userData = {	//返回用户数据
 	qqOpenid:'',
 }
 
-console.log('中间')
 router.get('/memo/qqlogin/', function(req, res, next) {
 	console.log('req.query:', req.query)
 	console.log('QQreq.url', req.url)
