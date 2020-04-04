@@ -20,7 +20,7 @@ var userData = {	//返回用户数据
 
 router.get('/memo/qqlogin/', function(req, res, next) {
 	console.log('req.query:', req.query)
-	console.log('QQreq.url', req.url)
+	console.log('req：', req)
 	var code = req.query.code //获取code
 	//通过code获取token
 	var getTokenUrl =
