@@ -70,7 +70,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 					}
 					// var username = userData.account
 					var username = userData.password
-					const token = jwt.sign( //生成token
+					var token = jwt.sign( //生成token
 						{
 							username
 						},
