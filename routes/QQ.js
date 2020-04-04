@@ -62,7 +62,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 						registe(userData).then((Rbdres)=>{
 							console.log('QQ注册成功!')
 						}).catch((err)=>{
-							console.log('QQ注册失败!'，err)
+							console.log('QQ注册失败!',err)
 						})
 					} else {
 						var username = userData.account
