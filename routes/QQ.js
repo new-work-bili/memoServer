@@ -68,8 +68,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 							console.log('QQ注册失败!', err)
 						})
 					}
-					// var username = userData.account
-					var username = userData.password
+					var username = userData.account
 					var token = jwt.sign( //生成token
 						{
 							username
