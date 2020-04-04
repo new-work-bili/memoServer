@@ -79,6 +79,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 					)
 					console.log('QQ生成token成功')
 					res.json({
+						code: 1,
 						userData: userData,
 						token: token
 					})
