@@ -57,9 +57,12 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 					account: body.nickname, //昵称，中文？
 					password: qqOpenid //Openid唯一标识
 				}
-				// userData.get = true
+				userData.get = true
 				userData.name = body.nickname 
 				userData.qqOpenid = qqOpenid
+				res.json({
+					userData:userData
+				})
 			})
 		})
 	})
