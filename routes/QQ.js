@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const request = require("request");
+const jwt = require('jsonwebtoken')
+const {PRIVATE_KEY,tokenOutTime} = require('../config.js')
 const {
 	login,
 	init,
@@ -13,9 +15,8 @@ const appId = '101851279'
 const appKey = '0835ace1f5216c95aa1fb5930168f50a'
 var redirect_uri = 'http://lppwork.cn/memo/qqlogin' //回调域
 var userData = {	//返回用户数据
-	get:false,
-	name:'',
-	qqOpenid:'',
+	account:'',
+	password:'',
 }
 
 router.get('/memo/qqlogin/', function(req, res, next) {
@@ -52,41 +53,39 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 				console.log('get用户数据')
 				body = JSON.parse(body);
 				console.log('body:',body)
-				var user = {
-					account: body.nickname, //昵称，中文？
-					password: qqOpenid //Openid唯一标识
-				}
-				userData.get = true
-				userData.name = body.nickname 
-				userData.qqOpenid = qqOpenid
-				res.json({
-					userData:userData
+				userData.account = body.nickname
+				userData.password = qqOpenid	//把Openid这个唯一标识作为密码
+				//把登陆信息放入数据库
+				login(userData).then(Lbdres => {
+					if (!Lbdres || Lbdres.length == 0) {
+						//未注册，进行注册
+						registe(userData).then((Rbdres)=>{
+							console.log('QQ注册成功!')
+						}).catch((err)=>{
+							console.log('QQ注册失败!'，err)
+						})
+					} else {
+						var username = userData.account
+						const token = jwt.sign( 		//生成token
+							{username},
+							PRIVATE_KEY, 
+							{expiresIn: tokenOutTime}
+						)
+						console.log('QQ生成token成功')
+						res.json({
+							userData:userData,
+							token:token
+						})
+					}
+				
+				}).catch((err) => {
+					console.log('QQ登陆err:', err)
 				})
+				
 			})
 		})
 	})
 	
-	//正常请求
-	//注意QQ登陆的时候应该只查qqOpendid
-	// console.log('监听到/QQ/')
-	// res.json("\
-	// 					    <h1>QQ昵称：" + body.nickname + "openid:" + qqOpenid +
-	// 	"</h1>\
-	// 					    <p>![QQ头像](" + body.figureurl_qq_1 + ")</p>\
-	// 					    <p>性别：" + body.gender +
-	// 	"</p>\
-	// 					    <p>地区：" + body.province + "," + body.city + "</p>\
-	// 					")
-		
-
 });
 
-router.get('/qqData/',function(req,res,next){
-	console.log('处理qqData接口')
-	if(userData.get = true){
-		res.json({
-			userData:userData
-		})
-	}
-})
 module.exports = router;
