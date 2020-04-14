@@ -94,4 +94,15 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 
 });
 
+//测试上传文件
+router.post('/upload/', function(req, res, next) {
+	console.log('上传成功:',req)
+	console.log('上传成功:',req.header)
+	res.json({
+		code: 1,
+		msg:'上传成功!',
+	})
+	
+});
+
 module.exports = router;
