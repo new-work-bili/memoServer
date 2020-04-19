@@ -24,7 +24,6 @@ var userData = { //返回用户数据
 }
 
 router.get('/memo/qqlogin/', function(req, res, next) {
-	console.log('req.query:', req.query)
 	var code = req.query.code //获取code
 	//通过code获取token
 	var getTokenUrl =
@@ -33,7 +32,6 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 	request.get({
 		url: getTokenUrl
 	}, (err, httpResponse, body) => {
-		console.log('通过code获取token:', body)
 		var access_token = body.split('=')[1].split('&')[0]; //获取返回的token
 
 		//使用Access Token 获取用户openid/unionid
@@ -41,7 +39,6 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 		request.get({
 			url: getMeUrl
 		}, (err, httpResponse, body) => {
-			console.log('使用Access Token 获取用户openid/unionid:', body)
 			var str = body;
 			var jsonStr = str.replace('callback( ', '');
 			jsonStr = jsonStr.replace(' );', '');
@@ -53,9 +50,7 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 			request.get({
 				url: getUserData
 			}, (err, httpResponse, body) => {
-				console.log('get用户数据')
 				body = JSON.parse(body);
-				console.log('body:', body)
 				userData.account = body.nickname
 				userData.password = qqOpenid //把Openid这个唯一标识作为密码
 				//把登陆信息放入数据库
