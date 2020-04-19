@@ -18,8 +18,8 @@ router.post('/init/', function(req, res, next) {
 			console.log('init>err:',err)
 			res.json({
 				code: -3,
-				userName:userName,
-				msg:'获取数据失败!'
+				msg:'获取数据失败!',
+				err:err
 			})
 		})
 		
@@ -86,6 +86,25 @@ router.post('/delete/', function(req, res, next) {
 			msg:'没有time'
 		})
 	}
+	
+});
+
+//设置置顶
+router.post('/setTop/', function(req, res, next) {
+	let itemData = req.body.item
+	return edit(itemData).then((bdres)=>{
+		console.log(bdres)
+		res.json({
+			code: 1,
+			msg:'更新成功',
+		})
+	}).catch((err)=>{
+		console.log('edit>err:',err)
+		res.json({
+			code: -3,
+			msg:'更新失败!',
+		})
+	})
 	
 });
 
