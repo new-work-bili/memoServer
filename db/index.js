@@ -12,6 +12,7 @@
  //执行sql的函数
  function exec(sql) {
  	const promise = new Promise((resolve, reject) => { //第二种形式是直接return new Promise(( , ) =>{});这样就不用再在最后写
+		console.log('15:',con)
  		con.query(sql, (err, result) => { //执行；err返回错误，result是把sql语句执行的结果返回
  			if (err) {
  				reject(err) //返回错误
@@ -19,6 +20,7 @@
  			}
  			resolve(result) //返回结果,resolve是then()下一步，并把sql语句的执行结果作为参数传进去
  		})
+		console.log('23:',con)
 		con.release(); //释放查询，不然查询过多的话会报错
  	})
 	
