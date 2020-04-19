@@ -19,7 +19,7 @@
  			}
  			resolve(result) //返回结果,resolve是then()下一步，并把sql语句的执行结果作为参数传进去
  		})
-		con.release() //释放查询，不然查询过多的话会报错
+		con.release(); //释放查询，不然查询过多的话会报错
  	})
 	
  	return promise
