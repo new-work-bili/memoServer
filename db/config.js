@@ -14,7 +14,8 @@
  		password: '3103456827eahs',
  		port: '3306',
  		database: 'memo',
-		connectionLimit:100	//最大连接数
+		connectionLimit:100	,//最大连接数
+		useConnectionPooling: true
  	}
 
  	// redis
@@ -31,7 +32,8 @@
  		password: '1655170926',
  		port: '3306',
  		database: 'memo',
-		connectionLimit:100	//最大连接数
+		connectionLimit:100	,//最大连接数
+		useConnectionPooling: true
  	}
 
  	// redis
