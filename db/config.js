@@ -13,7 +13,8 @@
  		user: 'root',
  		password: '3103456827eahs',
  		port: '3306',
- 		database: 'memo'
+ 		database: 'memo',
+		connectionLimit:100	//最大连接数
  	}
 
  	// redis
@@ -29,7 +30,8 @@
  		user: 'root',
  		password: '1655170926',
  		port: '3306',
- 		database: 'memo'
+ 		database: 'memo',
+		connectionLimit:100	//最大连接数
  	}
 
  	// redis
