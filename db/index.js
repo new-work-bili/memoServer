@@ -13,9 +13,11 @@ function exec (sql) {
 		con.query(sql,(err,result) => { 		//执行；err返回错误，result是把sql语句执行的结果返回
 			if(err){
 				reject(err)	//返回错误
+				con.release()	//释放查询，不然查询过多的话会报错
 				return
 			}
 			resolve(result)	//返回结果,resolve是then()下一步，并把sql语句的执行结果作为参数传进去
+			con.release()
 		})
 	})
 	return promise
