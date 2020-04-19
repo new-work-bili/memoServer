@@ -5,7 +5,7 @@
  } = require('./config.js') //导入连接对象
 
  // //创建连接
- const con = mysql.createConnection(MYSQL_CONF)
+ var con = mysql.createConnection(MYSQL_CONF)
 
  //开始连接
  con.connect()
