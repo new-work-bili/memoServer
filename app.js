@@ -10,7 +10,7 @@ const {token_ERR} = require('./config.js');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var QQ = require('./routes/QQ');
-const history = require('connect-history-api-fallback')	//应对vue的history
+// const history = require('connect-history-api-fallback')	//应对vue的history
 
 var app = express();
 
@@ -31,7 +31,7 @@ var app = express();
 //设置跨域访问
 app.use(cors());
 //应对vue的history
-app.use(history())
+// app.use(history())
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
