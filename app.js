@@ -31,7 +31,9 @@ var app = express();
 //设置跨域访问
 app.use(cors());
 //应对vue的history
-app.use(history())
+app.use(history({
+	index:'/memo/index.html'
+}))
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
