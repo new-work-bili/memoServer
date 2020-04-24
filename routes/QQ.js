@@ -17,7 +17,7 @@ const {
 } = require('../db/sql.js')
 const appId = '101851279'
 const appKey = '0835ace1f5216c95aa1fb5930168f50a'
-var redirect_uri = 'http://lppwork.cn/#/memo/qqlogin' //回调域
+var redirect_uri = 'http://lppwork.cn/memo/qqlogin' //回调域
 var userData = { //返回用户数据
 	account: '',
 	password: '',
