@@ -11,20 +11,8 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var QQ = require('./routes/QQ');
 const history = require('connect-history-api-fallback')	//应对vue的history
-
+var compression = require('compression')	//Gzipped压缩
 var app = express();
-
-
-// history({
-//   rewrites: [
-//         {
-//           from: /^\/api\/.*$/,
-//           to: function(context) {
-//               return context.parsedUrl.path
-//           }
-//         }
-//       ]
-// })
 
 
 
@@ -32,6 +20,8 @@ var app = express();
 app.use(cors());
 //应对vue的history
 app.use(history())
+// 启用gzip
+app.use(compression());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
