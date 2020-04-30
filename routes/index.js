@@ -46,6 +46,12 @@ router.post('/add/', function(req, res, next) {
 				})
 			}).catch((err)=>{
 				console.log('add>err:',err)
+				if(err.errno == 1406){
+					res.json({
+						code: -3,
+						msg:'超出长度!',
+					})
+				}
 			})
 		}else{	//编辑
 			return edit(itemData).then((bdres)=>{
@@ -56,6 +62,10 @@ router.post('/add/', function(req, res, next) {
 				})
 			}).catch((err)=>{
 				console.log('edit>err:',err)
+				res.json({
+					code: -3,
+					msg:'超出长度!',
+				})
 			})
 		}
 	}else{

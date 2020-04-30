@@ -23,7 +23,6 @@ var userData = { //返回用户数据
 	password: '',
 }
 
-console.log('之前')
 router.get('/memo/qqlogin/', function(req, res, next) {
 	console.log('之前中')
 	var code = req.query.code //获取code
