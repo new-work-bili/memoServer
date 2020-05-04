@@ -37,7 +37,7 @@ function edit(data) {
 	return exec(sql)
 }
 
-//编辑
+//删除
 function delet(data) {
 	const sql = `delete from memoitem where time='${data}';`
 	
@@ -49,6 +49,24 @@ function qqLogin(data){
 	
 }
 
+//查询task数据
+function selectTaskData(userName) {
+	const sql = `select * from taskdata where user = '${userName}';`
+	return exec(sql)
+}
+
+//新增用户task数据
+function addTaskData(userName,taskData) {
+	const sql = `insert into taskdata(user,taskData) values('${userName}','${taskData}');`
+	return exec(sql)
+}
+
+//覆盖用户task数据
+function editTaskData(userName,taskData) {
+	const sql = `update taskdata set taskData='${taskData}' where user = '${userName}';`
+	return exec(sql)
+}
+
 module.exports = {
 	login,
 	init,
@@ -56,5 +74,8 @@ module.exports = {
 	edit,
 	delet,
 	registe,
-	qqLogin
+	qqLogin,
+	selectTaskData,
+	addTaskData,
+	editTaskData
 }
