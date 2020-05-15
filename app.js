@@ -5,13 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors')
 
-const jwtAuth = require('./routes/jwt.js')		//token验证
-const {token_ERR} = require('./config.js');
+const jwtAuth = require('./routes/jwt.js') //token验证
+const {
+	token_ERR
+} = require('./config.js');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var QQ = require('./routes/QQ');
-const history = require('connect-history-api-fallback')	//应对vue的history
-var compression = require('compression')	//Gzipped压缩
+const history = require('connect-history-api-fallback') //应对vue的history
+var compression = require('compression') //Gzipped压缩
 var app = express();
 
 
@@ -35,23 +37,24 @@ app.use(express.static(path.join(__dirname, 'public/dist')));
 
 
 //验证token
-app.use(jwtAuth)	
+app.use(jwtAuth)
 app.use('/login/', loginRouter);
-app.use('/',QQ)
+app.use('/', QQ)
 
 //在这个前面写登陆，注销，注册
 app.use(function(req, res, next) {
 	console.log(111)
-	if(req.headers.authorization){	//如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存
+	if (req.headers.authorization) { //如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存
 		next()
-	}else{							//如果没有token，直接返回不往下走，这是用户在做离线操作
+	} else { //如果没有token，直接返回不往下走，这是用户在做离线操作
 		res.json({
-			code:'离线操作'
+			code: '离线操作'
 		})
 	}
-	
+
 });
 
+var test = 'test'
 app.use('/', indexRouter);
 
 
@@ -66,15 +69,15 @@ app.use(function(err, req, res, next) {
 	console.log(222)
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
-	
-	console.log('app.js>err:',err)
+
+	console.log('app.js>err:', err)
 	//token错误时，err中的name的值，具体token报错信息见https://www.jianshu.com/p/9b71a1582c40
 	if (err.name == 'UnauthorizedError') {
 		console.log(err)
 		res.json({
-			code:token_ERR,
-			error:err.status,
-			errorMsg:err.message
+			code: token_ERR,
+			error: err.status,
+			errorMsg: err.message
 		})
 		return
 	}

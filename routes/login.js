@@ -2,21 +2,23 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken')
 const {PRIVATE_KEY,tokenOutTime} = require('../config.js')
-	
-
 const {login,init,registe} = require('../db/sql.js')
 
 
 
+
 router.post('/', function(req, res, next) {
-	//通过token解析信息
-	// var reqToken = req.headers.authorization	
-	// var str=reqToken.replace("Bearer ","");   //去掉 Bearer
-	// console.log(str)
-	// jwt.verify(str, PRIVATE_KEY, function(err, resUser) {
-	// 	console.log('resUser', resUser); 
-	// })
-	console.log('login',req.url)
+	// //通过token解析信息,获取用户名(不能依靠客户端在localStorage中传来的用户名，不安全)
+	// if(req.headers.authorization	){
+	// 	var reqToken = req.headers.authorization
+	// 	var str=reqToken.replace("Bearer ","");   //去掉 Bearer
+	// 	console.log(str)
+	// 	jwt.verify(str, PRIVATE_KEY, function(err, resUser) {
+	// 		console.log('resUser', resUser); 
+	// 	})
+	// }
+	
+	
 	//登陆操作
 	return login(req.body).then(data => {
 		if (!data || data.length == 0) {
