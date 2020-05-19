@@ -40,7 +40,6 @@ app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use(jwtAuth)
 app.use('/login/', loginRouter);
 app.use('/', QQ)
-
 //在这个前面写登陆，注销，注册
 app.use(function(req, res, next) {
 	console.log(111)

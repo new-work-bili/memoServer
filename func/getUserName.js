@@ -15,5 +15,4 @@ function getusername(token) {
 	console.log('resUser', username);
 	return username
 }
-
 module.exports = getusername;
