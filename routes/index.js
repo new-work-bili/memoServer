@@ -126,7 +126,7 @@ router.post('/delete/', function(req, res, next) {
 
 	} else {
 		res.json({
-			code: 0,
+			code: -1,
 			msg: '没有time'
 		})
 	}

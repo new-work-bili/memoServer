@@ -9,7 +9,6 @@ function getusername(token) {
 	var str = token.replace("Bearer ", ""); //去掉 Bearer
 	var username
 	jwt.verify(str, PRIVATE_KEY, function(err, resUser) {
-		console.log('resUser', resUser.username);
 		username = resUser.username
 	})
 	console.log('resUser', username);

@@ -1,20 +1,22 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors')
-
 const jwtAuth = require('./routes/jwt.js') //token验证
 const {
 	token_ERR
 } = require('./config.js');
-var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
-var QQ = require('./routes/QQ');
+const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
+const QQ = require('./routes/QQ');
 const history = require('connect-history-api-fallback') //应对vue的history
-var compression = require('compression') //Gzipped压缩
-var app = express();
+const compression = require('compression') //Gzipped压缩
+const morgan = require('morgan'); //日志
+const app = express();
+const getUserName = require('./func/getUserName.js') //用jwt反向解析出token中的用户名
 
 
 
@@ -24,6 +26,46 @@ app.use(cors());
 app.use(history())
 // 启用gzip
 app.use(compression());
+
+
+//设置日志文件路径
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
+	flags: 'a'
+});
+var username
+// 自定义token
+morgan.token('msg', function(req, res) {
+	if(req.originalUrl == '/login/'){
+		return `"${username}"进行了登陆`
+	}else if(req.originalUrl == '/login/registe/'){
+		return `"${username}"进行了注册`
+	}else if(req.originalUrl == '/memo/qqlogin/'){
+		return `"${username}"使用了QQ登陆`
+	}else{
+		return 'WDNM'
+	}
+});
+morgan.token('test', function(req, res) {
+	return '日志:';
+});
+// 自定义format，其中包含自定义的token
+morgan.format('joke', ':url :status :msg [:date[iso]] \r\n ');
+app.use(morgan('joke', {
+	skip: function(req, res) {						//忽略日志,只输出用户登录、QQ登陆、注册等操作的日志
+		if(req.body.account || req.body.userName){
+			username = req.body.account || req.body.userName
+		}else{
+			username = getUserName(req.headers.authorization)
+		}
+		var logPort = ['/login/','/login/registe/','/memo/qqlogin/']
+		var is = logPort.filter(item => item == req.originalUrl)//req.originalUrl---完整url路径
+		return !is.length
+	},
+	stream: accessLogStream		//把日志写入日志文件,如果删掉此行，那么日志会打印到控制台
+}));
+
+
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -53,8 +95,10 @@ app.use(function(req, res, next) {
 
 });
 
-var test = 'test'
 app.use('/', indexRouter);
+
+
+
 
 
 
@@ -65,7 +109,6 @@ app.use(function(req, res, next) {
 
 //统一对错误进行处理
 app.use(function(err, req, res, next) {
-	console.log(222)
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 

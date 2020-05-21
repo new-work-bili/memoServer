@@ -10,6 +10,13 @@ function login(data) {
 	return exec(sql)
 }
 
+//查询是否已存在用户
+function selectUser(data) {
+	const sql = `select * from users where account = '${data.account}';`
+	
+	return exec(sql)
+}
+
 //注册
 function registe(data) {
 	const sql = `insert into users(account,password) values('${data.account}','${data.password}');`
@@ -77,5 +84,6 @@ module.exports = {
 	qqLogin,
 	selectTaskData,
 	addTaskData,
-	editTaskData
+	editTaskData,
+	selectUser
 }
