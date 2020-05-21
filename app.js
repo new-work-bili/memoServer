@@ -54,8 +54,10 @@ app.use(morgan('joke', {
 	skip: function(req, res) {						//忽略日志,只输出用户登录、QQ登陆、注册等操作的日志
 		if(req.body.account || req.body.userName){
 			username = req.body.account || req.body.userName
-		}else{
+		}else if(req.headers.authorization){
 			username = getUserName(req.headers.authorization)
+		}else{
+			username = ''
 		}
 		var logPort = ['/login/','/login/registe/','/memo/qqlogin/']
 		var is = logPort.filter(item => item == req.originalUrl)//req.originalUrl---完整url路径
