@@ -115,13 +115,13 @@ app.use(function(req, res, next) {
 		next()
 	} else { //如果没有token，直接返回不往下走，这是用户在做离线操作
 		console.log('离线操作')
-		// res.json({
-		// 	code: '离线操作'
-		// })
-		app.use(function(req, res, next) {
-			console.log('404')
-			next(createError(404));
-		});
+		res.json({
+			code: '离线操作'
+		})
+		// app.use(function(req, res, next) {
+		// 	console.log('404')
+		// 	next(createError(404));
+		// });
 	}
 
 });
