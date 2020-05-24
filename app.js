@@ -92,7 +92,6 @@ app.use(morgan('joke', {
 }));
 
 
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger('dev')); //自带的打印路由,如:POST /init/ 200 127.119 ms - 103
@@ -101,8 +100,7 @@ app.use(express.urlencoded({
 	extended: false
 }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public/dist')));
-
+// app.use(express.static(path.join(__dirname, 'public/dist')));
 
 //验证token
 app.use(jwtAuth)
@@ -117,9 +115,13 @@ app.use(function(req, res, next) {
 		next()
 	} else { //如果没有token，直接返回不往下走，这是用户在做离线操作
 		console.log('离线操作')
-		res.json({
-			code: '离线操作'
-		})
+		// res.json({
+		// 	code: '离线操作'
+		// })
+		app.use(function(req, res, next) {
+			console.log('404')
+			next(createError(404));
+		});
 	}
 
 });
@@ -133,6 +135,7 @@ app.use(function(req, res, next) {
 	console.log('404')
 	next(createError(404));
 });
+
 
 //统一对错误进行处理
 app.use(function(err, req, res, next) {
@@ -153,4 +156,6 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
+//放在最后...
+app.use(express.static(path.join(__dirname, 'public/dist')));
 module.exports = app;
