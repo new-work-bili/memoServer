@@ -100,7 +100,7 @@ app.use(express.urlencoded({
 	extended: false
 }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public/dist')));
+app.use(express.static(path.join(__dirname, 'public/dist')));
 
 //验证token
 app.use(jwtAuth)
@@ -156,6 +156,4 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-//放在最后...
-app.use(express.static(path.join(__dirname, 'public/dist')));
 module.exports = app;
