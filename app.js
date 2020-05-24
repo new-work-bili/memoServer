@@ -72,8 +72,7 @@ morgan.format('joke', '[:date[iso]] :url :status :msg \r\n ');
 //输出日志
 app.use(morgan('joke', {
 	skip: function(req, res) { //忽略日志,只输出用户登录、QQ登陆、注册等操作的日志
-		console.log('res:',res)
-		console.log('res.body:',res.body)
+		console.log('输出日志下的res:',res)
 		if (req.body.account || req.body.userName) {
 			username = req.body.account || req.body.userName
 		} else if (req.headers.authorization) {
@@ -111,7 +110,7 @@ app.use('/', QQ)
 //在这个前面写登陆，注销，注册
 app.use(function(req, res, next) {
 	console.log('分离离线与在线操作')
-	console.log(req.originalUrl)
+	// console.log(req.originalUrl)
 	//如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存；当QQ登陆时也是线上操作
 	if (req.headers.authorization || req.originalUrl =='/memo/qqlogin/') { 
 		next()
