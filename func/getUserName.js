@@ -11,7 +11,7 @@ function getusername(token) {
 	jwt.verify(str, PRIVATE_KEY, function(err, resUser) {
 		username = resUser.username
 	})
-	console.log('resUser', username);
+	// console.log('resUser', username);
 	return username
 }
 module.exports = getusername;
