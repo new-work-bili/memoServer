@@ -108,9 +108,9 @@ app.use('/login/', loginRouter);
 app.use('/', QQ)
 //判断在线、离线操作；在这之前写登陆，注销，之后写在线操作的增删改查
 app.use(function(req, res, next) {
-	console.log('req.originalUrl:',req.originalUrl)
+	var routerUrl = req.originalUrl.split('?')[0]
 	//如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存；当QQ登陆时也是线上操作
-	if (req.headers.authorization || req.originalUrl == '/memo/qqlogin/') {
+	if (req.headers.authorization || routerUrl == '/memo/qqlogin') {
 		console.log('next')
 		next()
 	} else { 
@@ -122,10 +122,10 @@ app.use(function(req, res, next) {
 		if(req.method == 'POST'){
 			next(createError(403));
 		}if(req.method == 'GET'){
-			// next(createError(404));
-			res.json({
-				code: 404
-			})
+			next(createError(404));
+			// res.json({
+			// 	code: 404
+			// })
 		}
 		
 	}
@@ -138,10 +138,10 @@ app.use('/', indexRouter);
 
 //处理404
 app.use(function(req, res, next) {
-	// next(createError(404));
-	res.json({
-		code: 404
-	})
+	next(createError(404));
+	// res.json({
+	// 	code: 404
+	// })
 });
 
 
