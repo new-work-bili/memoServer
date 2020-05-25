@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+// const logger = require('morgan');
 const cors = require('cors')
 const jwtAuth = require('./routes/jwt.js') //token验证
 const {
@@ -23,14 +23,12 @@ const _log = require('./func/log.js')
 
 //设置跨域访问
 app.use(cors());
-//应对vue的history
-app.use(history())
+
+
+
 // 启用gzip
 app.use(compression());
 
-// app.use((req,res,next)=>{
-// 	_log(req,res,next)
-// })
 
 
 
@@ -94,7 +92,7 @@ app.use(morgan('joke', {
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(logger('dev')); //自带的打印路由,如:POST /init/ 200 127.119 ms - 103
+// app.use(morgan('dev')); //
 app.use(express.json());
 app.use(express.urlencoded({
 	extended: false
@@ -102,26 +100,24 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
+//应对vue的history，::放在处理路由之前，并且在引入静态文件之后
+app.use(history())
 //验证token
 app.use(jwtAuth)
 app.use('/login/', loginRouter);
 app.use('/', QQ)
-//在这个前面写登陆，注销，注册
+//判断在线、离线操作；在这之前写登陆，注销，之后写在线操作的增删改查
 app.use(function(req, res, next) {
-	// console.log(req.originalUrl)
 	//如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存；当QQ登陆时也是线上操作
 	if (req.headers.authorization || req.originalUrl == '/memo/qqlogin/') {
 		console.log('next')
 		next()
-	} else { //如果没有token，直接返回不往下走，这是用户在做离线操作
+	} else { 
+		//如果没有token，直接返回不往下走，这是用户在做离线操作
+		//并且做离线操作走到这一步肯定是做了不正当的操作(比如手动在localStorage里输入用户名)或者是访问不匹配的路由
+		//这是应该返回的是403
 		console.log('离线操作')
-		res.json({
-			code: '离线操作'
-		})
-		// app.use(function(req, res, next) {
-		// 	console.log('404')
-		// 	next(createError(404));
-		// });
+		next(createError(403));
 	}
 
 });
