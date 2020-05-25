@@ -115,9 +115,15 @@ app.use(function(req, res, next) {
 	} else { 
 		//如果没有token，直接返回不往下走，这是用户在做离线操作
 		//并且做离线操作走到这一步肯定是做了不正当的操作(比如手动在localStorage里输入用户名)或者是访问不匹配的路由
-		//这是应该返回的是403
-		console.log('离线操作')
-		next(createError(403));
+		//两种情况：1.在线、离线操作输入不匹配的url，在线就算有token但他不会发过来，所以会走到这里--->需要404：这些都是get
+		//2.离线操作如果要是手动在localStorage里输入用户名，这是会发送请求但也没有token，会走到这里--->需要403:post
+		console.log('离线操作:mouth:',req.method)
+		if(req.method == 'POST'){
+			next(createError(403));
+		}if(req.method == 'GET'){
+			next(createError(404));
+		}
+		
 	}
 
 });
