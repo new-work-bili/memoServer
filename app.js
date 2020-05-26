@@ -67,8 +67,23 @@ morgan.token('msg', function(req, res) {
 		return 'WDNM'
 	}
 });
+morgan.token('time', function(req, res) {
+	function add0(m) {
+		return m < 10 ? '0' + m : m
+	}
+
+	var time = new Date();
+	var y = time.getFullYear();
+	var m = time.getMonth() + 1;
+	var d = time.getDate();
+	var h = time.getHours();
+	var mm = time.getMinutes();
+	var s = time.getSeconds();
+	return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+});
+
 // 自定义format，其中包含自定义的token
-morgan.format('joke', '[:date[iso]] :url :status :msg \r\n ');
+morgan.format('joke', ':time :url :status :msg \r\n ');
 //输出日志
 app.use(morgan('joke', {
 	skip: function(req, res) { //忽略日志,只输出用户登录、QQ登陆、注册等操作的日志
@@ -92,44 +107,45 @@ app.use(morgan('joke', {
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-// app.use(morgan('dev')); //
 app.use(express.json());
 app.use(express.urlencoded({
 	extended: false
 }));
 app.use(cookieParser());
+//应对vue的history，要使其生效，需要放在express.static之前，但这样就不会触发后面的404...
+app.use(history())
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
-//应对vue的history，::放在处理路由之前，并且在引入静态文件之后
-app.use(history())
+
 //验证token
 app.use(jwtAuth)
 app.use('/login/', loginRouter);
 app.use('/', QQ)
 //判断在线、离线操作；在这之前写登陆，注销，之后写在线操作的增删改查
 app.use(function(req, res, next) {
-	console.log('req.originalUrl:',req.originalUrl)
+	console.log('req.originalUrl:', req.originalUrl)
 	var routerUrl = req.originalUrl.split('?')[0]
-	console.log('routerUrl',routerUrl)
+	console.log('routerUrl', routerUrl)
 	//如果请求头有token，那么往下走，用户在做在线操作，需要进行实时保存；当QQ登陆时也是线上操作
 	if (req.headers.authorization || routerUrl == '/memo/qqlogin') {
 		console.log('next')
 		next()
-	} else { 
+	} else {
 		//如果没有token，直接返回不往下走，这是用户在做离线操作
 		//并且做离线操作走到这一步肯定是做了不正当的操作(比如手动在localStorage里输入用户名)或者是访问不匹配的路由
 		//两种情况：1.在线、离线操作输入不匹配的url，在线就算有token但他不会发过来，所以会走到这里--->需要404：这些都是get
 		//2.离线操作如果要是手动在localStorage里输入用户名，这是会发送请求但也没有token，会走到这里--->需要403:post
-		console.log('离线操作:mouth:',req.method)
-		if(req.method == 'POST'){
+		console.log('离线操作:mouth:', req.method)
+		if (req.method == 'POST') {
 			next(createError(403));
-		}if(req.method == 'GET'){
+		}
+		if (req.method == 'GET') {
 			next(createError(404));
 			// res.json({
 			// 	code: 404
 			// })
 		}
-		
+
 	}
 
 });
