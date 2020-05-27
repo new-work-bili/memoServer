@@ -30,7 +30,9 @@ app.use(cors());
 app.use(compression());
 
 //morgan日志
-app.use(logFunc)
+// app.use(logFunc)
+//测试:自带的
+ app.use(morgan('dev'));
 
 
 app.set('views', path.join(__dirname, 'views'));
