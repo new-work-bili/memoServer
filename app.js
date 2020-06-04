@@ -17,8 +17,12 @@ const compression = require('compression') //Gzipped压缩
 const morgan = require('morgan'); //日志
 const app = express();
 const getUserName = require('./func/getUserName.js') //用jwt反向解析出token中的用户名
-const logFunc = require('./func/log.js')	//morgan配置中间件
+const logFunc = require('./func/log.js') //morgan配置中间件
 
+const timing = require('./func/timing.js')
+
+//定时
+timing()
 
 
 //设置跨域访问
@@ -32,7 +36,7 @@ app.use(compression());
 //morgan日志
 // app.use(logFunc)
 //测试:自带的
- app.use(morgan('dev'));
+app.use(morgan('dev'));
 
 
 app.set('views', path.join(__dirname, 'views'));

@@ -13,13 +13,28 @@ const {
 } = require('../db/sql.js')
 const querystring = require('querystring'); //用于序列化
 const getUserName = require('../func/getUserName.js') //用jwt反向解析出token中的用户名
-
+const createToken = require('../func/createToken.js')
+//链接redis
+const redis = require('../func/redis.js')
+const redisClient = redis.redisClient
 
 //初始化数据，如果有token验证成功，返回用户数据，没有跳过
 router.post('/init/', function(req, res, next) {
+	console.log('init放入黑名单')
 	var userName = getUserName(req.headers.authorization)
-	// var userName = req.body.userName
 	if (userName) {
+		//token的信息会存储在req.user中: iat 是token开始时间、exp截止时间
+		console.log('init放入黑名单的token信息:',req.user)
+		//把本次token放入黑名单
+		//hset写入(hash名,key,value),key是开始时间,value是截止时间
+		redisClient.hset('token', req.user.time, req.user.exp)
+		//生成新token传给前端
+		const token = createToken(userName)
+		
+		
+		
+		
+		//处理路由
 		init(userName).then((bdres) => {
 			//查询task数据
 			selectTaskData(userName).then((taskBdres) => {
@@ -38,7 +53,8 @@ router.post('/init/', function(req, res, next) {
 					userName: userName,
 					msg: '同步成功!',
 					userData: bdres,
-					taskData: objTaskData
+					taskData: objTaskData,
+					token:token
 				})
 			}).catch((err) => {
 				console.log('init>selectTaskData:>err', err)

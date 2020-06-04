@@ -1,31 +1,18 @@
 var express = require('express');
 var router = express.Router();
-const jwt = require('jsonwebtoken')
-const {
-	PRIVATE_KEY,
-	tokenOutTime
-} = require('../config.js')
 const {
 	login,
 	init,
 	registe,
 	selectUser
 } = require('../db/sql.js')
-
-
+const createToken = require('../func/createToken.js')
+//链接redis
+const redis = require('../func/redis.js')
+const redisClient = redis.redisClient
 
 
 router.post('/', function(req, res, next) {
-	// //通过token解析信息,获取用户名(不能依靠客户端在localStorage中传来的用户名，不安全)
-	// if(req.headers.authorization	){
-	// 	var reqToken = req.headers.authorization
-	// 	var str=reqToken.replace("Bearer ","");   //去掉 Bearer
-	// 	console.log(str)
-	// 	jwt.verify(str, PRIVATE_KEY, function(err, resUser) {
-	// 		console.log('resUser', resUser); 
-	// 	})
-	// }
-
 
 	//登陆操作
 	return login(req.body).then(data => {
@@ -36,14 +23,15 @@ router.post('/', function(req, res, next) {
 			})
 		} else {
 			var username = req.body.account
-			const token = jwt.sign( //生成token
-				{
-					username
-				},
-				PRIVATE_KEY, {
-					expiresIn: tokenOutTime
-				}
-			)
+			// const token = jwt.sign( //生成token
+			// 	{
+			// 		username
+			// 	},
+			// 	PRIVATE_KEY, {
+			// 		expiresIn: tokenOutTime
+			// 	}
+			// )
+			const token = createToken(username)
 			res.json({
 				code: 1,
 				msg: '登陆成功',
@@ -89,8 +77,20 @@ router.post('/registe/', function(req, res, next) {
 		})
 	})
 
-
 });
+router.post('/logout/',function(req,res,next){
+	console.log('logout:',req.user)
+	redisClient.hdel('token',req.user.time,(err,resdata)=>{
+		if(err){
+			console.log('logout delErr:',err)
+		}
+		console.log('删除ok')
+		res.json({
+			code: 1,
+			msg: '注销成功!'
+		})
+	})
+})
 
 
 module.exports = router;
