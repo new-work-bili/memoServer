@@ -17,6 +17,7 @@ const {
 } = require('../db/sql.js')
 const appId = '101851279'
 const appKey = '0835ace1f5216c95aa1fb5930168f50a'
+const createToken = require('../func/createToken.js')
 var redirect_uri = 'http://lppwork.cn/memo/qqlogin' //回调域
 var userData = { //返回用户数据
 	account: '',
@@ -68,14 +69,8 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 							})
 						}
 						var username = userData.account
-						var token = jwt.sign( //生成token
-							{
-								username
-							},
-							PRIVATE_KEY, {
-								expiresIn: tokenOutTime
-							}
-						)
+						//生成新token传给前端
+						var token = createToken(username)
 						console.log('QQ生成token成功')
 						res.json({
 							code: 1,

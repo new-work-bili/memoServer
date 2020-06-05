@@ -5,7 +5,7 @@ const fs = require('fs');
 const cookieParser = require('cookie-parser');
 // const logger = require('morgan');
 const cors = require('cors')
-const jwtAuth = require('./routes/jwt.js') //token验证
+const jwtAuth = require('./func/jwt.js') //token验证
 const {
 	token_ERR
 } = require('./config.js');

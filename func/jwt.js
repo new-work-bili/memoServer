@@ -15,8 +15,6 @@ let isRevokedCallback = function(req, payload, done) {
 		console.log('tokenKey:', tokenKey)
 	})
 	
-	
-	
 	//payload当前的token信息----如；{ username: 'test', iat: 1591179448, exp: 1591784248 }
 	console.log('验证token中的token信息', payload)
 	console.log('jwt检查是否在黑名单内','   本次token Key:',payload.time)

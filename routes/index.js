@@ -26,7 +26,7 @@ router.post('/init/', function(req, res, next) {
 		//token的信息会存储在req.user中: iat 是token开始时间、exp截止时间
 		console.log('init放入黑名单的token信息:',req.user)
 		//把本次token放入黑名单
-		//hset写入(hash名,key,value),key是开始时间,value是截止时间
+		//使用hset写入(hash名,key,value),key是开始时间,value是截止时间
 		redisClient.hset('token', req.user.time, req.user.exp)
 		//生成新token传给前端
 		const token = createToken(userName)
