@@ -36,13 +36,13 @@ function exec(sql) {
 		//getConnection：从连接池中取出连接，如无连接可用则隐式的建立一个数据库连接。
 		pool.getConnection((err, connection) => {
 			if (err) {
-				console.log('连接错误')
+				console.log('连接错误:',err)
 				return reject(err)
 			} else {
 				//查询数据，这个一样
 				connection.query(sql, (err, result) => {
 					if (err) {
-						console.log('查询错误')
+						console.log('查询错误:',err)
 						return reject(err)
 					} else {
 						return resolve(result)

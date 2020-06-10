@@ -9,7 +9,9 @@ const {
 	delet,
 	selectTaskData,
 	editTaskData,
-	addTaskData
+	addTaskData,
+	editLabelData,
+	selectLabelData
 } = require('../db/sql.js')
 const querystring = require('querystring'); //用于序列化
 const getUserName = require('../func/getUserName.js') //用jwt反向解析出token中的用户名
@@ -34,11 +36,10 @@ router.post('/init/', function(req, res, next) {
 		
 		
 		
-		//处理路由
+		//处理路由;查询
 		init(userName).then((bdres) => {
 			//查询task数据
 			selectTaskData(userName).then((taskBdres) => {
-				// console.log('init>selectTaskData:',querystring.parse(taskBdres[0].taskData))
 				let objTaskData
 				if (taskBdres.length == 0) {
 					//如果该用户没有过task数据，标记一下
@@ -48,14 +49,33 @@ router.post('/init/', function(req, res, next) {
 				} else {
 					objTaskData = querystring.parse(taskBdres[0].taskData) //解析(反序列化)
 				}
-				res.json({
-					code: 1,
-					userName: userName,
-					msg: '同步成功!',
-					userData: bdres,
-					taskData: objTaskData,
-					token:token
+				//查询label类别信息
+				selectLabelData(userName).then((dbres)=>{
+					var labelData = {}
+					console.log('dbres[0].labelData:',dbres[0].labelData,'length:')
+					if(dbres.length !=0 && dbres[0].labelData){
+						labelData = JSON.parse(dbres[0].labelData)
+					}else{
+						labelData = ['生活','学习','工作']
+					}
+					res.json({
+						code: 1,
+						userName: userName,
+						msg: '同步成功!',
+						userData: bdres,
+						taskData: objTaskData,
+						token:token,
+						labelData:labelData
+					})
+				}).catch((err)=>{
+					console.log('labelErr:',err)
+					res.json({
+						code: -1,
+						msg: '获取数据失败!',
+					})
 				})
+				
+				
 			}).catch((err) => {
 				console.log('init>selectTaskData:>err', err)
 				res.json({
@@ -172,8 +192,6 @@ router.post('/setTop/', function(req, res, next) {
 router.post('/taskData/', function(req, res, next) {
 	let taskData = querystring.stringify(req.body.taskData) //序列化，以便存入数据库
 	var userName = getUserName(req.headers.authorization)
-	// let userName = req.body.userName
-	console.log(taskData, userName)
 	selectTaskData(userName).then((bdres) => {
 		if (bdres.length == 0) {
 			console.log('该用户无task数据,新增')
@@ -217,7 +235,24 @@ router.post('/taskData/', function(req, res, next) {
 
 });
 
+//增肌/编辑/删除 类别---就是覆盖
+router.post('/changeLabel/', function(req, res, next) {
+	let lebelData = JSON.stringify(req.body.labelArr) //序列化，以便存入数据库
+	let userName = getUserName(req.headers.authorization)
+	console.log(JSON.stringify(req.body.labelArr))
+	editLabelData(userName,lebelData).then(()=>{
+		console.log('成功')
+		res.json({
+			code: 1,
+		})
+	}).catch(()=>{
+		res.json({
+			code: -1,
+		})
+	})
 
+	
+});
 
 
 

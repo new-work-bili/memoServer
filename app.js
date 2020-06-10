@@ -73,9 +73,6 @@ app.use(function(req, res, next) {
 		}
 		if (req.method == 'GET') {
 			next(createError(404));
-			// res.json({
-			// 	code: 404
-			// })
 		}
 
 	}
@@ -89,9 +86,6 @@ app.use('/', indexRouter);
 //处理404
 app.use(function(req, res, next) {
 	next(createError(404));
-	// res.json({
-	// 	code: 404
-	// })
 });
 
 

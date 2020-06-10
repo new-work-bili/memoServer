@@ -74,6 +74,18 @@ function editTaskData(userName,taskData) {
 	return exec(sql)
 }
 
+//覆盖label数据
+function editLabelData(userName,labelData) {
+	const sql = `update users set labelData='${labelData}' where account = '${userName}';`
+	return exec(sql)
+}
+
+//查询label数据
+function selectLabelData(userName) {
+	const sql = `select * from users where account = '${userName}';`
+	return exec(sql)
+}
+
 module.exports = {
 	login,
 	init,
@@ -85,5 +97,7 @@ module.exports = {
 	selectTaskData,
 	addTaskData,
 	editTaskData,
-	selectUser
+	selectUser,
+	editLabelData,
+	selectLabelData
 }
