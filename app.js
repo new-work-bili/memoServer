@@ -54,7 +54,6 @@ app.use(cookieParser());
 //应对vue的history，要使其生效，需要放在express.static之前，但这样就不会触发后面的404...
 app.use(history())
 
-
 if(args.name && args.name == 'weihu'){
 	//调维护页面
 	console.log('weihu')

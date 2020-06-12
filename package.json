@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=dev nodemon ./bin/www",
     "prd": "cross-env NODE_ENV=production pm2 start pm2.conf.json",
     "watch": "cross-env NODE_ENV=production nodemon ./bin/www",
-	"weihu":"cross-env NODE_ENV=dev nodemon ./bin/www -- --name hello"
+	"weihu":"cross-env NODE_ENV=dev nodemon ./bin/www -- --name weihu"
   },
   "dependencies": {
     "compression": "^1.7.4",
