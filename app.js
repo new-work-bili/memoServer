@@ -58,10 +58,11 @@ app.use(history())
 if(args.name && args.name == 'weihu'){
 	//调维护页面
 	console.log('weihu')
-	app.use(express.static(path.join(__dirname, 'public/dist')));
+	app.use(express.static(path.join(__dirname, 'public/weihu')));
 }else{
 	//正常页面
-	app.use(express.static(path.join(__dirname, 'public/weihu')));
+	app.use(express.static(path.join(__dirname, 'public/dist')));
+	
 }
 
 
