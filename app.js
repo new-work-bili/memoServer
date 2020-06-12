@@ -18,8 +18,14 @@ const morgan = require('morgan'); //日志
 const app = express();
 const getUserName = require('./func/getUserName.js') //用jwt反向解析出token中的用户名
 const logFunc = require('./func/log.js') //morgan配置中间件
-
 const timing = require('./func/timing.js')
+var minimist = require('minimist');
+
+//获取packge.json下scripts的命令参数
+var args = minimist(process.argv.slice(2));
+// console.log(process.argv,args)
+
+
 
 //定时
 timing()
@@ -48,7 +54,17 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 //应对vue的history，要使其生效，需要放在express.static之前，但这样就不会触发后面的404...
 app.use(history())
-app.use(express.static(path.join(__dirname, 'public/dist')));
+
+
+if(args.name && args.name == 'weihu'){
+	//调维护页面
+	app.use(express.static(path.join(__dirname, 'public/dist')));
+}else{
+	//正常页面
+	app.use(express.static(path.join(__dirname, 'public/weihu')));
+}
+
+
 
 
 //验证token
