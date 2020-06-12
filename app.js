@@ -23,7 +23,6 @@ var minimist = require('minimist');
 
 //获取packge.json下scripts的命令参数
 var args = minimist(process.argv.slice(2));
-// console.log(process.argv,args)
 
 
 
@@ -58,6 +57,7 @@ app.use(history())
 
 if(args.name && args.name == 'weihu'){
 	//调维护页面
+	console.log('weihu')
 	app.use(express.static(path.join(__dirname, 'public/dist')));
 }else{
 	//正常页面
