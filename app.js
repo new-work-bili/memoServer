@@ -9,9 +9,12 @@ const jwtAuth = require('./func/jwt.js') //token验证
 const {
 	token_ERR
 } = require('./config.js');
+
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const QQ = require('./routes/QQ');
+const sendEmali = require('./routes/sendEmali')
+
 const history = require('connect-history-api-fallback') //应对vue的history
 const compression = require('compression') //Gzipped压缩
 const morgan = require('morgan'); //日志
@@ -29,11 +32,8 @@ var args = minimist(process.argv.slice(2));
 //定时
 timing()
 
-
 //设置跨域访问
 app.use(cors());
-
-
 
 // 启用gzip
 app.use(compression());
@@ -42,7 +42,6 @@ app.use(compression());
 // app.use(logFunc)
 //测试:自带的
 app.use(morgan('dev'));
-
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -66,11 +65,13 @@ if(args.name && args.name == 'weihu'){
 
 
 
-
 //验证token
 app.use(jwtAuth)
 app.use('/login/', loginRouter);
 app.use('/', QQ)
+app.use('/sendEmali/', sendEmali)
+
+
 //判断在线、离线操作；在这之前写登陆，注销，之后写在线操作的增删改查
 app.use(function(req, res, next) {
 	var routerUrl = req.originalUrl.split('?')[0]

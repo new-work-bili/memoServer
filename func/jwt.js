@@ -45,7 +45,8 @@ const jwtAuth = jwt({
 		'/memo/qqlogin',
 		'/memo/qqlogin/',
 		'/qqData/',
-		'/upload/'
+		'/upload/',
+		'/sendEmali/'
 	], // 设置 jwt 认证白名单
 });
 
