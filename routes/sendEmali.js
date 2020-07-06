@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
 			console.error('sendEmaliErr:',err)
 			res.json({
 				code: -1,
-				msg:'请求超时，请重试!'
+				msg:'请求超时，请稍后再试!'
 			})
 		} else {
 			console.log('sendEmaliSucces:',err, info)
