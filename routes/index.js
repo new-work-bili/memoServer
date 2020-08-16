@@ -52,8 +52,8 @@ router.post('/init/', function(req, res, next) {
 				//查询label类别信息
 				selectLabelData(userName).then((dbres)=>{
 					var labelData = {}
-					console.log('dbres[0].labelData:',dbres[0].labelData,'length:')
-					if(dbres.length !=0 && dbres[0].labelData){
+					// console.log('查询测试（dbres[0].labelData）：',dbres[0].labelData=='undefined')//true
+					if(dbres.length !=0 && dbres[0].labelData && dbres[0].labelData!='undefined'){	//防止'undefined'
 						labelData = JSON.parse(dbres[0].labelData)
 					}else{
 						labelData = ['生活','学习','工作']

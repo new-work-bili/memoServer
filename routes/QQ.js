@@ -33,7 +33,6 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 		//通过code获取token
 		var getTokenUrl =
 			`https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=${appId}&client_secret=${appKey}&code=${code}&redirect_uri=${redirect_uri}`
-
 		request.get({
 			url: getTokenUrl
 		}, (err, httpResponse, body) => {
