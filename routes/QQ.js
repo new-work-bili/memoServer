@@ -4,7 +4,9 @@ const request = require("request");
 const jwt = require('jsonwebtoken')
 const {
 	PRIVATE_KEY,
-	tokenOutTime
+	tokenOutTime,
+	appId,
+	appKey
 } = require('../config.js')
 const {
 	login,
@@ -15,8 +17,6 @@ const {
 	qqLogin,
 	registe
 } = require('../db/sql.js')
-const appId = '101851279'
-const appKey = '0835ace1f5216c95aa1fb5930168f50a'
 const createToken = require('../func/createToken.js')
 var redirect_uri = 'http://lppwork.cn/memo/qqlogin' //回调域
 var userData = { //返回用户数据
