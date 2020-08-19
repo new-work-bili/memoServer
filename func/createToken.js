@@ -11,7 +11,8 @@ const createToken = function(username) {
 			username,
 			time
 		},
-		PRIVATE_KEY, {
+		PRIVATE_KEY, 
+		{
 			expiresIn: tokenOutTime
 		}
 	)
