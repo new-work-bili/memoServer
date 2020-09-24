@@ -3,6 +3,8 @@ node_modules
 config.js
 /db/config.js
 dump.rdb
+/logs/webTime.log
+/logs/PV.log
 
 # local env files
 .env.local

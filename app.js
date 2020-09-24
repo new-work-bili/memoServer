@@ -3,8 +3,14 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-// const logger = require('morgan');
 const cors = require('cors')
+const history = require('connect-history-api-fallback') //应对vue的history
+const compression = require('compression') //Gzipped压缩
+const morgan = require('morgan'); //日志
+const app = express();
+var minimist = require('minimist');
+
+
 const jwtAuth = require('./func/jwt.js') //token验证
 const {
 	token_ERR
@@ -15,14 +21,13 @@ const loginRouter = require('./routes/login');
 const QQ = require('./routes/QQ');
 const sendEmali = require('./routes/sendEmali')
 
-const history = require('connect-history-api-fallback') //应对vue的history
-const compression = require('compression') //Gzipped压缩
-const morgan = require('morgan'); //日志
-const app = express();
+
 const getUserName = require('./func/getUserName.js') //用jwt反向解析出token中的用户名
-const logFunc = require('./func/log.js') //morgan配置中间件
+const logFunc = require('./func/log.js') //morgan自定义配置的日志中间件
+const listen_log = require('./func/listen_log.js') //morgan自定义配置的日志中间件
 const timing = require('./func/timing.js')
-var minimist = require('minimist');
+
+
 
 //获取packge.json下scripts的命令参数
 var args = minimist(process.argv.slice(2));
@@ -39,10 +44,34 @@ app.use(cors());
 app.use(compression());
 
 //morgan日志
-// app.use(logFunc)
-//测试:自带的
-app.use(morgan('dev'));
+app.use(logFunc)
+//
+app.use(listen_log)
 
+
+
+//新日志内容
+	// var accessLogStream = fs.createWriteStream(path.join(__dirname, './logs/webTime.log'), {flags: 'a'})
+	// //日志
+	// morgan.token('webTime_usePC_token', function(req, res) {
+	// 	if (req.route.path == '/ListenLog/'){
+			
+	// 		var pares = req.url.split('?')[1]
+	// 		var data = qs.parse(pares)
+			
+	// 		console.log(JSON.stringify(data) )
+	// 		// console.log('dawdw')
+	// 		// return `${data}`
+	// 		return `${JSON.stringify(data) }`;
+	// 	}
+	// });
+	// morgan.format('webTime_usePC_format', ':webTime_usePC_token ');
+	// app.use(morgan('webTime_usePC_format',{stream: accessLogStream}));
+
+
+
+//测试:自带的
+// app.use(morgan('dev'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.json());
@@ -50,6 +79,7 @@ app.use(express.urlencoded({
 	extended: false
 }));
 app.use(cookieParser());
+
 //应对vue的history，要使其生效，需要放在express.static之前，但这样就不会触发后面的404...
 app.use(history())
 
@@ -63,13 +93,12 @@ if(args.name && args.name == 'weihu'){
 	
 }
 
-
-
 //验证token
 app.use(jwtAuth)
 app.use('/login/', loginRouter);
 app.use('/', QQ)
 app.use('/sendEmali/', sendEmali)
+
 
 
 //判断在线、离线操作；在这之前写登陆，注销，之后写在线操作的增删改查
