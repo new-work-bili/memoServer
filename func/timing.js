@@ -52,10 +52,6 @@ const PV_log = () => {
 	})
 
 }
-//test
-// setInterval(()=>{
-// 	PV_log()
-// },1000)
 
 //每天判断黑名单有没有过期
 const Blacklist = () => {
@@ -82,13 +78,15 @@ const Blacklist = () => {
 	})
 }
 
+//Blacklist()
 //每天判断黑名单有没有过期
 const scheduleCronstyle = () => {
-	//Cron表达式:每秒执行一次:*/1 * * * * ?;每天凌晨:0 0 0 /1 * ? *;
-	schedule.scheduleJob('0 0 0 /1 * ? *', () => {
-		Blacklist()
-		//PV
-		PV_log()
+	//Cron表达式:每秒执行一次:*/1 * * * * ?;每天凌晨:0 0 0 * * *;
+	schedule.scheduleJob('0 0 0 * * *', () => {
+		console.log('test')
+		// Blacklist()
+		// //PV
+		// PV_log()
 	});
 
 

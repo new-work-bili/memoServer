@@ -32,10 +32,10 @@ morgan.token('webTime_usePC_token', function(req, res) {
 		
 		//前端性能log
 		var data = qs.parse(pares)
-		return `${JSON.stringify(data) }`;
+		return `${JSON.stringify(data)}`;
 	}
 });
-morgan.format('webTime_usePC_format', ':webTime_usePC_token ');
+morgan.format('webTime_usePC_format', ':time :webTime_usePC_token');
 
 
 //封装中间件

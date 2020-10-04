@@ -24,7 +24,7 @@ const sendEmali = require('./routes/sendEmali')
 
 const getUserName = require('./func/getUserName.js') //用jwt反向解析出token中的用户名
 const logFunc = require('./func/log.js') //morgan自定义配置的日志中间件
-const listen_log = require('./func/listen_log.js') //morgan自定义配置的日志中间件
+const listen_log = require('./func/listen_log.js') ///listen的日志
 const timing = require('./func/timing.js')
 
 
