@@ -49,27 +49,6 @@ app.use(logFunc)
 app.use(listen_log)
 
 
-
-//新日志内容
-	// var accessLogStream = fs.createWriteStream(path.join(__dirname, './logs/webTime.log'), {flags: 'a'})
-	// //日志
-	// morgan.token('webTime_usePC_token', function(req, res) {
-	// 	if (req.route.path == '/ListenLog/'){
-			
-	// 		var pares = req.url.split('?')[1]
-	// 		var data = qs.parse(pares)
-			
-	// 		console.log(JSON.stringify(data) )
-	// 		// console.log('dawdw')
-	// 		// return `${data}`
-	// 		return `${JSON.stringify(data) }`;
-	// 	}
-	// });
-	// morgan.format('webTime_usePC_format', ':webTime_usePC_token ');
-	// app.use(morgan('webTime_usePC_format',{stream: accessLogStream}));
-
-
-
 //测试:自带的
 // app.use(morgan('dev'));
 app.set('views', path.join(__dirname, 'views'));
@@ -81,17 +60,17 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 //应对vue的history，要使其生效，需要放在express.static之前，但这样就不会触发后面的404...
-app.use(history())
+// app.use(history())
 
-if(args.name && args.name == 'weihu'){
-	//调维护页面
-	console.log('weihu')
-	app.use(express.static(path.join(__dirname, 'public/weihu')));
-}else{
-	//正常页面
-	app.use(express.static(path.join(__dirname, 'public/dist')));
+// if(args.name && args.name == 'weihu'){
+// 	//调维护页面
+// 	console.log('weihu')
+// 	app.use(express.static(path.join(__dirname, 'public/weihu')));
+// }else{
+// 	//正常页面
+// 	app.use(express.static(path.join(__dirname, 'public/dist')));
 	
-}
+// }
 
 //验证token
 app.use(jwtAuth)
