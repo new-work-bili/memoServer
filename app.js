@@ -20,6 +20,7 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const QQ = require('./routes/QQ');
 const sendEmali = require('./routes/sendEmali')
+const list_log_router = require('./routes/listen_log.js')
 
 
 const getUserName = require('./func/getUserName.js') //用jwt反向解析出token中的用户名
@@ -71,6 +72,10 @@ app.use(cookieParser());
 // 	app.use(express.static(path.join(__dirname, 'public/dist')));
 	
 // }
+
+
+//Image Beacon接口204处理
+app.use('/list_log_router/', list_log_router)
 
 //验证token
 app.use(jwtAuth)
