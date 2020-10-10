@@ -75,7 +75,7 @@ app.use(cookieParser());
 
 
 //Image Beacon接口204处理
-app.use('/list_log_router/', list_log_router)
+app.use('/ListenLog/', list_log_router)
 
 //验证token
 app.use(jwtAuth)
