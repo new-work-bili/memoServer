@@ -51,7 +51,6 @@ function exec(sql) {
 					resolve(result);
 				})
 			}
-
 		})
 	})
 }

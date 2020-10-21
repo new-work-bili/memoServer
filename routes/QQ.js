@@ -36,13 +36,21 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 		request.get({
 			url: getTokenUrl
 		}, (err, httpResponse, body) => {
+			if(err){
+				console.log('获取token错误',err)
+				res.status(500).end('获取token错误')
+			}
 			var access_token = body.split('=')[1].split('&')[0]; //获取返回的token
-
 			//使用Access Token 获取用户openid/unionid
 			var getMeUrl = 'https://graph.qq.com/oauth2.0/me?access_token=' + access_token;
 			request.get({
 				url: getMeUrl
 			}, (err, httpResponse, body) => {
+				if(err){
+					console.log('获取用户openid/unionid错误',err)
+					res.status(500).end('获取用户openid/unionid错误')
+				}
+
 				var str = body;
 				var jsonStr = str.replace('callback( ', '');
 				jsonStr = jsonStr.replace(' );', '');
@@ -54,6 +62,11 @@ router.get('/memo/qqlogin/', function(req, res, next) {
 				request.get({
 					url: getUserData
 				}, (err, httpResponse, body) => {
+					if(err){
+						console.log('获取用户最终信息错误',err)
+						res.status(500).end('获取用户最终信息错误')
+					}
+
 					body = JSON.parse(body);
 					userData.account = body.nickname
 					userData.password = qqOpenid //把Openid这个唯一标识作为密码
